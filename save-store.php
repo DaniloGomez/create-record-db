@@ -27,6 +27,3 @@
         echo "There is an error";
     }
 ?>
-
-
-
