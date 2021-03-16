@@ -1,4 +1,6 @@
 <?php
+if (!empty($_POST))
+{
     $name = $_REQUEST["name"];
     $location = $_REQUEST["location"];
     $phone = $_REQUEST["phone"];
@@ -26,6 +28,8 @@
     else{
         echo "There is an error";
     }
+}
+    
 ?>
 
 
@@ -39,8 +43,9 @@
 
 </head>
 <body>
-    <h3 style="color:green;font-size:30px;">Register your store</h3>
+    <center><h3 style="color:green;font-size:30px;">Register your store</h3></center>
     <div style="font-size:20px;">
+        <center>
         <form action="create-store.php" method="POST">
             Name <input type="text" name=name><br/>
             Location <input type="radio" name=location value="0"/>Manizales
@@ -48,6 +53,7 @@
             Phone <input type="tel" id="phone" name=phone placeholder="123 456 1122"/><br/><br/>
             <input type="submit" name="Register" value="Save Store"/>
         </form>
+        </center>
     </div>
 </body>
 </html>
