@@ -44,10 +44,10 @@ if (!empty($_POST)){
     <fieldset style="background-color:gray;">
         <form style="font-size:20px; font-family: arial;" action="create-product.php" method="POST">
         <center>
-        Name product <input style="font-family: arial; font-size:25px;" type="text" name=prod_name><br/>
-        <br/>
+        Name product <input type="text" name=prod_name placeholder=" " value="<?php echo $name; ?>"/>
+        
         Product price <input style="font-family:arial; font-size:25px;" type="number" 
-        name=prod_price placeholder="$">
+        name=prod_price placeholder="$" value="<?php echo $price;?>"/>
         <br/>
         <br/>
         <input type="submit" name="send" style="font-size:20px;">
