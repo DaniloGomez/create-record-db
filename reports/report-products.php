@@ -2,15 +2,17 @@
 
     $location_store;
     $Where = '';
-    $categ;
+    $prod;
 
-    if(isset($_REQUEST['category'])){
-        $categ = $_REQUEST['category'];
-        $Where = "WHERE en.category = '$categ'";
+    if(isset($_REQUEST['product_id'])){
+        $prod = $_REQUEST['product_id'];
+        $Where = "WHERE en.product_id = '$prod'";
 
         if(isset($_REQUEST['location'])){
             $location_store = $_REQUEST['location'];
-            $Where = "$Where AND cs.location = $location_store";
+            if($location_store !=""){
+                $Where = "$Where OR cs.location = $location_store";
+            }
         }   
     }
 
@@ -23,16 +25,31 @@
     $con = new PDO("mysql:host=$host;dbname=$dbname", $username, $password);
 
     //Build sentence SQL
-    $sql = "SELECT cs.name, cs.location, en.category, pr.prod_name, pr.prod_price FROM `create_store` as cs JOIN enrollment as en ON cs.id = en.store_id JOIN products as pr ON en.product_id = pr.id $Where ORDER BY cs.name ASC
+    $sql = "SELECT cs.name, cs.location, pr.prod_name FROM `create_store` as cs JOIN enrollment as en ON cs.id = en.store_id JOIN products as pr ON en.product_id = pr.id $Where ORDER BY cs.name ASC
     ";
-
     //Prepare sentence SQL
     $p = $con->prepare($sql);
-
     //Execute SQL sentence
     $result = $p->execute();
+    $enrollments = $p -> fetchAll();
 
-    $enrollments = $p -> fetchAll();    
+    //Build sentence SQL
+    $sql = "SELECT id, name FROM create_store";
+    //Prepare sentence SQL
+    $p = $con->prepare($sql);
+    //Execute SQL sentence
+    $result = $p->execute();
+    $store = $p -> fetchAll();
+
+    //Build sentence SQL
+    $sql = "SELECT id, prod_name FROM products";
+    //Prepare sentence SQL
+    $p = $con->prepare($sql);
+    //Execute SQL sentence
+    $result = $p->execute();
+    $product = $p -> fetchAll();
+
+    
 ?>
 
 <!DOCTYPE html>
@@ -41,26 +58,38 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Enrollments List</title>
+    <title>Report store by product</title>
 </head>
 <body>
 
-<form action="full-enrollment.php">
+<form action="report-products.php">
     Location
     <select name="location">
-    <option value="<?php echo $location ?>"></option>
+    <option value=""></option>
         <option value="0">Manizales</option>
         <option value="1">Pereira</option>
     </select>
-    <input type="submit" value="Search">
+    <input type="submit" value="OR">
     <br/><br/>
-    Category
-    <input type="number" name="category" value="<?php echo $categ ?>">
+    Product
+    <select name="product_id" id="">
+            <option value=""></option>
+            <?php
+                for($i=0; $i<count($product); $i++){
+            ?>
+                <option value="<?php echo $product[$i]["id"] ?>">
+                <?php echo $product[$i]["prod_name"] ?>
+                </option>
+            <?php
+                }
+            ?>
+    </select>
+    <br/>
     <hr>
     
 </form>
 
-<h1>Enrollment List Search</h1>
+<h1>Report store by product</h1>
     <table border="1">
         <tr>
             <td>
@@ -70,13 +99,7 @@
                 Location Store
             </td>
             <td>
-                Category
-            </td>
-            <td>
                 Product
-            </td>
-            <td>
-                Price Product
             </td>
         </tr>
 
@@ -99,26 +122,7 @@
                         ?>
                     </td>
                     <td>
-                        <?php
-                        $category = $enrollments[$i]["category"];
-                        switch ($category){
-                            case 0:
-                                echo "Healt";
-                                break;
-                            case 1:
-                                echo "Grosery";
-                                break;
-                            case 2:
-                                echo "Bakery";
-                                break;
-                        }
-                        ?>
-                    </td>
-                    <td>
                         <?php echo $enrollments[$i]["prod_name"] ?>
-                    </td>
-                    <td>
-                        <?php echo $enrollments[$i]["prod_price"] ?>
                     </td>
                 </tr>
 <?php
@@ -128,3 +132,4 @@
     </table>
 </body>
 </html>
+
