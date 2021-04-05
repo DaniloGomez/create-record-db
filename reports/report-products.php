@@ -62,7 +62,7 @@
 </head>
 <body>
 
-<form action="report-products.php">
+<form action="report-products.php" method="POST">
     Location
     <select name="location">
     <option value=""></option>

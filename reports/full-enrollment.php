@@ -45,7 +45,7 @@
 </head>
 <body>
 
-<form action="full-enrollment.php">
+<form action="full-enrollment.php" method="POST">
     Location
     <select name="location">
     <option value="<?php echo $location ?>"></option>

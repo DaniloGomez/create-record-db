@@ -22,7 +22,7 @@ if (!empty($_POST)){
     $result = $p->execute();
 
     if($result){
-        echo "Store created succesfully";
+        echo "Product created succesfully";
     }
     else{
         echo "There is an error";
@@ -44,7 +44,7 @@ if (!empty($_POST)){
     <fieldset style="background-color:gray;">
         <form style="font-size:20px; font-family: arial;" action="create-product.php" method="POST">
         <center>
-        Name product <input type="text" name=prod_name placeholder=" " value="<?php echo $name; ?>"/>
+        Name product <input type="text" name=prod_name placeholder=" " value=""/>
         
         Product price <input style="font-family:arial; font-size:25px;" type="number" 
         name=prod_price placeholder="$" value="<?php echo $price;?>"/>
