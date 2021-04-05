@@ -47,10 +47,13 @@ if (!empty($_POST))
     <div style="font-size:20px;">
         <center>
         <form action="create-store.php" method="POST">
-            Name <input type="text" name=name value=<?php echo $name; ?>><br/>
+            Name <input type="text" name=name
+                value="">            
+            
             Location <input type="radio" name=location value="0"/>Manizales
                     <input type="radio" name=location value="1"/>Pereira<br/>
-            Phone <input type="tel" id="phone" name=phone placeholder="123 456 1122" value="<?php echo $phone; ?>"/><br/><br/>
+            Phone <input type="tel" id="phone" name=phone placeholder="123 456 1122" 
+            value=""/><br/><br/>
             <input type="submit" name="Register" value="Save Store"/>
         </form>
         </center>

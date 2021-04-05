@@ -52,7 +52,7 @@
         <option value="0">Manizales</option>
         <option value="1">Pereira</option>
     </select>
-    <input type="submit" value="Search">
+    <input type="submit" value="AND">
     <br/><br/>
     Category
     <input type="number" name="category" value="<?php echo $categ ?>">
